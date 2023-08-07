@@ -4,7 +4,14 @@ import { createLayout } from "./TextLayout";
 import vertices from "./vertices";
 import * as BABYLON from "@babylonjs/core";
 
-export const createTextMesh = (options = {}) => {
+export const createTextMesh = ({
+  color = new BABYLON.Color3(0, 0, 0),
+  stroke,
+  strokeColor = new BABYLON.Color3(0, 0, 0),
+  opacity = 1,
+  strokeWidth = 0.5,
+  ...options
+}) => {
   const layout = createLayout(options);
   const font = options.font;
 
@@ -174,16 +181,20 @@ export const createTextMesh = (options = {}) => {
   const mainTexture = new BABYLON.Texture(options.atlas, options.scene);
   shaderMaterial.setTexture("uFontAtlas", mainTexture);
 
-  const uColor = new BABYLON.Color3(1, 0, 0);
+  const uColor = new BABYLON.Color3(color.r, color.g, color.b);
   shaderMaterial.setColor3("uColor", uColor);
 
-  const uStrokeColor = new BABYLON.Color3(1, 0, 0);
+  const uStrokeColor = new BABYLON.Color3(
+    strokeColor.r,
+    strokeColor.g,
+    strokeColor.b
+  );
   shaderMaterial.setColor3("uStrokeColor", uStrokeColor);
 
   shaderMaterial.setFloat("uThreshold", 0.5);
   shaderMaterial.setFloat("uStrokeOutsetWidth", 0);
-  shaderMaterial.setFloat("uStrokeInsetWidth", 0.0);
-  shaderMaterial.setFloat("uOpacity", 1);
+  shaderMaterial.setFloat("uStrokeInsetWidth", strokeWidth);
+  shaderMaterial.setFloat("uOpacity", opacity);
   shaderMaterial.setFloat("uAlphaTest", 0.1);
 
   shaderMaterial.setInt("uLinesTotal", infos.linesTotal);

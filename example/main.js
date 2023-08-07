@@ -1,8 +1,8 @@
 import "./style.css";
 import * as BABYLON from "@babylonjs/core";
+import { createTextMesh } from "babylon-msdf-text";
 import fnt from "./fontAssets/roboto-regular.json";
 import png from "./fontAssets/roboto-regular.png";
-import { createTextMesh } from "babylon-msdf-text";
 
 const initCamera = (scene) => {
   const camera = new BABYLON.ArcRotateCamera(
@@ -43,10 +43,19 @@ let textGeo = createTextMesh({
   atlas: png,
   engine,
   width: 2500,
+  color: new BABYLON.Color3(1, 0, 0),
 });
 
 textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
 textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
+
+engine.runRenderLoop(function () {
+  scene.render();
+});
+
+window.addEventListener("resize", function () {
+  engine.resize();
+});
 
 const inputField = document.getElementById("text-input");
 
@@ -63,12 +72,4 @@ inputField.addEventListener("change", (e) => {
 
   textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
   textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
-});
-
-engine.runRenderLoop(function () {
-  scene.render();
-});
-
-window.addEventListener("resize", function () {
-  engine.resize();
 });
