@@ -15,15 +15,16 @@ export const setCustomAttributes = ({ engine, data, kind, stride, mesh }) => {
 
 export const vertexShader = `
 precision highp float; 
-// Attributes 
+
 attribute vec3 position; 
 attribute vec2 uv; 
 attribute vec2 center; 
-// Uniforms 
+
 uniform mat4 worldViewProjection; 
-// Varying 
+
 varying vec2 vUV; 
 varying vec2 vCenter; 
+
 void main(void) { 
   gl_Position = worldViewProjection * vec4(position, 1.0); 
   vUV = uv; 
@@ -31,23 +32,31 @@ void main(void) {
 }
 `;
 export const fragmentShader = `
-precision highp float; 
+precision highp float;
+
 varying vec2 vUV; 
 varying vec2 vCenter; 
-uniform sampler2D uFontAtlas; 
+
+uniform sampler2D uFontAtlas;
+
+uniform vec3 uStrokeColor;
+uniform vec3 uColor;
+
+uniform float uThreshold;
+uniform float uStrokeOutsetWidth;
+uniform float uStrokeInsetWidth;
+uniform float  uOpacity;
+uniform float uAlphaTest;
+
+uniform int uLinesTotal;
+uniform int uWordsTotal;
+uniform int uLettersTotal;
 
 float median(float r, float g, float b) {
   return max(min(r, g), min(max(r, g), b));
 }
 
 void main(void) { 
-  float uThreshold = 0.05;
-  float uStrokeOutsetWidth = 0.1;
-  float uStrokeInsetWidth = 0.1;
-  float  uOpacity =  1.0;
-  vec3 uColor = vec3(0.);
-  float uAlphaTest =  0.01;
-  vec3 uStrokeColor = vec3(1., 0., 0.);
 
   vec3 s = texture2D(uFontAtlas, vUV).rgb;
   float sigDist = median(s.r, s.g, s.b) - 0.5;
@@ -83,6 +92,6 @@ void main(void) {
   // Output: Strokes
   vec4 strokedFragColor = vec4(uStrokeColor, uOpacity * border);
   
-  gl_FragColor = filledFragColor ; 
+  gl_FragColor = filledFragColor; 
 }
 `;

@@ -42,7 +42,6 @@ const ALIGN_RIGHT = 2;
 
 class TextLayout {
   constructor(options = {}) {
-    console.log(options);
     this.glyphs = [];
     this._measure = this.computeMetrics.bind(this);
     this.update(options);

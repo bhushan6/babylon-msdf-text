@@ -63,7 +63,6 @@ export const createTextMesh = (options = {}) => {
     mesh: textMesh,
   });
 
-  // // this.setAttribute('linesTotal', new BufferAttribute(infos.linesTotal, 1)); // Use uniforms instead
   setCustomAttributes({
     engine: options.engine,
     data: infos.lineIndex,
@@ -104,7 +103,6 @@ export const createTextMesh = (options = {}) => {
     mesh: textMesh,
   });
 
-  // // this.setAttribute('wordsTotal', new BufferAttribute(infos.wordsTotal, 1)); // Use uniforms instead
   setCustomAttributes({
     engine: options.engine,
     data: infos.wordIndex,
@@ -112,8 +110,6 @@ export const createTextMesh = (options = {}) => {
     stride: 1,
     mesh: textMesh,
   });
-
-  // // this.setAttribute('lettersTotal', new BufferAttribute(infos.lettersTotal, 1)); // Use uniforms instead
   setCustomAttributes({
     engine: options.engine,
     data: infos.letterIndex,
@@ -161,6 +157,16 @@ export const createTextMesh = (options = {}) => {
         "worldViewProjection",
         "view",
         "projection",
+        "uColor",
+        "uThreshold",
+        "uStrokeOutsetWidth",
+        "uStrokeInsetWidth",
+        "uOpacity",
+        "uAlphaTest",
+        "uStrokeColor",
+        "uLinesTotal",
+        "uWordsTotal",
+        "uLettersTotal",
       ],
     }
   );
@@ -168,7 +174,23 @@ export const createTextMesh = (options = {}) => {
   const mainTexture = new BABYLON.Texture(options.atlas, options.scene);
   shaderMaterial.setTexture("uFontAtlas", mainTexture);
 
-  console.log(mainTexture);
+  const uColor = new BABYLON.Color3(0, 0, 0);
+  shaderMaterial.setColor3("uColor", uColor);
+
+  const uStrokeColor = new BABYLON.Color3(0, 0, 0);
+  shaderMaterial.setColor3("uStrokeColor", uStrokeColor);
+
+  shaderMaterial.setFloat("uThreshold", 0.05);
+  shaderMaterial.setFloat("uStrokeOutsetWidth", 0.5);
+  shaderMaterial.setFloat("uStrokeInsetWidth", 0.1);
+  shaderMaterial.setFloat("uOpacity", 1.0);
+  shaderMaterial.setFloat("uAlphaTest", 0.01);
+
+  shaderMaterial.setInt("uLinesTotal", infos.linesTotal);
+  shaderMaterial.setInt("uWordsTotal", infos.wordsTotal);
+  shaderMaterial.setInt("uLettersTotal", infos.lettersTotal);
+
+  console.log(infos);
 
   shaderMaterial.backFaceCulling = false;
 
