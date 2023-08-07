@@ -5,6 +5,7 @@ import png from "./fontAssets/abel-regular.png";
 import { createLayout } from "./MSDF-Text/TextLayout";
 import vertices from "./MSDF-Text/vertices";
 import createIndices from "quad-indices";
+
 const setCustomAttributes = ({ engine, data, kind, stride, mesh }) => {
   const buffer = new BABYLON.VertexBuffer(
     engine,
@@ -57,7 +58,7 @@ const createTextGeometry = (options = {}) => {
   vertexData.indices = indices;
   vertexData.uvs = attributes.uvs;
 
-  var normals = [];
+  const normals = [];
   BABYLON.VertexData.ComputeNormals(attributes.positions, indices, normals);
   vertexData.normals = normals;
 
@@ -273,7 +274,7 @@ const initCamera = (scene) => {
   );
 
   camera.attachControl(true);
-  camera.setPosition(new BABYLON.Vector3(0, 0, -200));
+  camera.setPosition(new BABYLON.Vector3(0, 0, -400));
   return camera;
 };
 
@@ -300,7 +301,7 @@ let textGeo = createTextGeometry({
   scene,
   atlas: png,
   engine,
-  width: 700,
+  width: 1000,
 });
 
 textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
