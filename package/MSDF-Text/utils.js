@@ -22,19 +22,19 @@ attribute vec2 center;
 
 uniform mat4 worldViewProjection; 
 
-varying vec2 vUV; 
+varying vec2 vUv;
 varying vec2 vCenter; 
 
 void main(void) { 
   gl_Position = worldViewProjection * vec4(position, 1.0); 
-  vUV = uv; 
+  vUv = uv; 
   vCenter = center;
 }
 `;
 export const fragmentShader = `
 precision highp float;
 
-varying vec2 vUV; 
+varying vec2 vUv; 
 varying vec2 vCenter; 
 
 uniform sampler2D uFontAtlas;
@@ -56,12 +56,16 @@ float median(float r, float g, float b) {
   return max(min(r, g), min(max(r, g), b));
 }
 
+
 void main(void) { 
 
-  vec3 s = texture2D(uFontAtlas, vUV).rgb;
+  float thickness = 0.5;
+  float softness = 0.5;
+
+  vec3 s = texture2D(uFontAtlas, vUv).rgb;
   float sigDist = median(s.r, s.g, s.b) - 0.5;
   float afwidth = 1.4142135623730951 / 2.0;
-  
+
   #ifdef IS_SMALL
   float alpha = smoothstep(uThreshold - afwidth, uThreshold + afwidth, sigDist);
   #else

@@ -1,8 +1,8 @@
 import "./style.css";
 import * as BABYLON from "@babylonjs/core";
-import fnt from "./fontAssets/abel-regular-msdf.json";
-import png from "./fontAssets/abel-regular.png";
-import { createTextMesh } from "./MSDF-Text";
+import fnt from "./fontAssets/roboto-regular.json";
+import png from "./fontAssets/roboto-regular.png";
+import { createTextMesh } from "babylon-msdf-text";
 
 const initCamera = (scene) => {
   const camera = new BABYLON.ArcRotateCamera(
@@ -42,7 +42,7 @@ let textGeo = createTextMesh({
   scene,
   atlas: png,
   engine,
-  width: 1000,
+  width: 2500,
 });
 
 textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
@@ -58,7 +58,7 @@ inputField.addEventListener("change", (e) => {
     scene,
     atlas: png,
     engine,
-    width: 700,
+    width: 1000,
   });
 
   textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;

@@ -1,5 +1,5 @@
 {
-  "name": "babylong-msdf-text",
+  "name": "example",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,8 +12,6 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "@babylonjs/core": "^6.15.0",
-    "quad-indices": "^2.0.1",
-    "word-wrapper": "^1.0.7"
+    "@babylonjs/core": "^6.15.0"
   }
 }

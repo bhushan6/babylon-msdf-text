@@ -174,23 +174,21 @@ export const createTextMesh = (options = {}) => {
   const mainTexture = new BABYLON.Texture(options.atlas, options.scene);
   shaderMaterial.setTexture("uFontAtlas", mainTexture);
 
-  const uColor = new BABYLON.Color3(0, 0, 0);
+  const uColor = new BABYLON.Color3(1, 0, 0);
   shaderMaterial.setColor3("uColor", uColor);
 
-  const uStrokeColor = new BABYLON.Color3(0, 0, 0);
+  const uStrokeColor = new BABYLON.Color3(1, 0, 0);
   shaderMaterial.setColor3("uStrokeColor", uStrokeColor);
 
-  shaderMaterial.setFloat("uThreshold", 0.05);
-  shaderMaterial.setFloat("uStrokeOutsetWidth", 0.5);
-  shaderMaterial.setFloat("uStrokeInsetWidth", 0.1);
-  shaderMaterial.setFloat("uOpacity", 1.0);
-  shaderMaterial.setFloat("uAlphaTest", 0.01);
+  shaderMaterial.setFloat("uThreshold", 0.5);
+  shaderMaterial.setFloat("uStrokeOutsetWidth", 0);
+  shaderMaterial.setFloat("uStrokeInsetWidth", 0.0);
+  shaderMaterial.setFloat("uOpacity", 1);
+  shaderMaterial.setFloat("uAlphaTest", 0.1);
 
   shaderMaterial.setInt("uLinesTotal", infos.linesTotal);
   shaderMaterial.setInt("uWordsTotal", infos.wordsTotal);
   shaderMaterial.setInt("uLettersTotal", infos.lettersTotal);
-
-  console.log(infos);
 
   shaderMaterial.backFaceCulling = false;
 

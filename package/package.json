@@ -1,0 +1,39 @@
+{
+  "name": "babylon-msdf-text",
+  "version": "0.0.0",
+  "type": "module",
+  "keywords": [
+    "babylon",
+    "msdf",
+    "text-rendering",
+    "webgl"
+  ],
+  "author": "Bhushan Wagh (https://github.com/bhushan6)",
+  "bugs": {
+    "url": "https://github.com/bhushan6/babylon-msdf-text/issues"
+  },
+  "homepage": "https://github.com/bhushan6/babylon-msdf-text#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^6.15.0",
+    "quad-indices": "^2.0.1",
+    "word-wrapper": "^1.0.7"
+  },
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/babylon-msdf-text.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/babylon-msdf-text.es.js"
+    }
+  }
+}
