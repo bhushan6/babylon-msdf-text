@@ -1,6 +1,6 @@
 {
   "name": "babylon-msdf-text",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "keywords": [
     "babylon",
@@ -16,6 +16,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "publish:patch": "npm version patch && npm run build && npm publish",
+    "publish:minor": "npm version minor && npm run build && npm publish",
+    "publish:major": "npm version major && npm run build && npm publish",
     "preview": "vite preview"
   },
   "license": "MIT",
