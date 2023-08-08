@@ -12,6 +12,7 @@ const PARAMS = {
   width: 2500,
   align: "left",
   color: { r: 1, g: 0, b: 1 },
+  opacity: 1,
 };
 
 const initCamera = (scene) => {
@@ -95,6 +96,11 @@ const alignInput = pane.addBinding(PARAMS, "align", {
 const colorInput = pane.addBinding(PARAMS, "color", {
   color: { type: "float" },
 });
+const opacityInput = pane.addBinding(PARAMS, "opacity", {
+  min: 0,
+  max: 1,
+  step: 0.1,
+});
 
 const updateMesh = () => {
   textGeo.dispose();
@@ -134,5 +140,9 @@ alignInput.on("change", (e) => {
 });
 
 colorInput.on("change", (e) => {
+  updateMesh();
+});
+
+opacityInput.on("change", (e) => {
   updateMesh();
 });
