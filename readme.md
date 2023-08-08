@@ -2,6 +2,8 @@
 
 Introducing babylon-msdf-text, that implements the Multi-channel Signed Distance Field (MSDF) technique for text rendering. This library provides developers with an efficient and straightforward way to render high-quality, scalable, and anti-aliased text in their Babylon.js projects. Leveraging the power of MSDF, it allows for superior text rendering, especially in WebGL contexts, overcoming the limitations of traditional bitmap fonts.
 
+![npm](https://img.shields.io/npm/v/babylon-msdf-text.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/babylon-msdf-text.svg?style=flat-square)
+
 ## Installation
 
 ```bash
@@ -9,8 +11,6 @@ npm install babylon-msdf-text
 ```
 
 ## Usage
-
-First, import the createTextMesh function from the library:
 
 ```javascript
 import { createTextMesh } from "babylon-msdf-text";
@@ -85,6 +85,12 @@ let textGeo = createTextMesh({
 textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
 textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
 ```
+
+## Roadmap
+
+- Option to add stroke
+- More Examples
+- NPM Publish workflow
 
 ## Contributing
 
