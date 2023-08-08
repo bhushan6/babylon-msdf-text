@@ -3,6 +3,16 @@ import * as BABYLON from "@babylonjs/core";
 import { createTextMesh } from "babylon-msdf-text";
 import fnt from "./fontAssets/roboto-regular.json";
 import png from "./fontAssets/roboto-regular.png";
+import { Pane } from "tweakpane";
+
+const PARAMS = {
+  text: "Hello Babylon",
+  lineHeight: 1,
+  letterSpacing: 0,
+  width: 2500,
+  align: "left",
+  color: { r: 1, g: 0, b: 1 },
+};
 
 const initCamera = (scene) => {
   const camera = new BABYLON.ArcRotateCamera(
@@ -15,7 +25,7 @@ const initCamera = (scene) => {
   );
 
   camera.attachControl(true);
-  camera.setPosition(new BABYLON.Vector3(0, 0, -400));
+  camera.setPosition(new BABYLON.Vector3(0, 0, -800));
   return camera;
 };
 
@@ -35,15 +45,13 @@ const createScene = function (engine) {
 const scene = createScene(engine);
 
 let textGeo = createTextMesh({
-  text: `
-  MSDF stands for Multi-channel Signed Distance Field. It's a technique used in text rendering, particularly in computer graphics and game development, to create high-quality, scalable text.
-  Traditional bitmap fonts can become blurry or pixelated when scaled up. MSDF text rendering, on the other hand, allows for much higher quality text rendering at various scales and distances    `,
+  text: `Hello`,
   font: fnt,
   scene,
   atlas: png,
   engine,
-  width: 2500,
   color: new BABYLON.Color3(1, 0, 0),
+  ...PARAMS,
 });
 
 textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
@@ -57,19 +65,74 @@ window.addEventListener("resize", function () {
   engine.resize();
 });
 
-const inputField = document.getElementById("text-input");
+//GUI PANEL
+const pane = new Pane();
 
-inputField.addEventListener("change", (e) => {
+const lineHeightInput = pane.addBinding(PARAMS, "lineHeight", {
+  min: 1,
+  max: 10,
+  step: 0.1,
+});
+
+const textInput = pane.addBinding(PARAMS, "text");
+
+const letterSpacingInput = pane.addBinding(PARAMS, "letterSpacing", {
+  min: 0,
+  max: 100,
+  step: 0.1,
+});
+
+const widthInput = pane.addBinding(PARAMS, "width", {
+  min: 100,
+  max: 5000,
+  step: 10,
+});
+
+const alignInput = pane.addBinding(PARAMS, "align", {
+  options: { Left: "left", Center: "center", Right: "right" },
+});
+
+const colorInput = pane.addBinding(PARAMS, "color", {
+  color: { type: "float" },
+});
+
+const updateMesh = () => {
   textGeo.dispose();
   textGeo = createTextMesh({
-    text: e.target.value,
+    text: `hello`,
     font: fnt,
     scene,
     atlas: png,
     engine,
-    width: 1000,
+    color: new BABYLON.Color3(1, 0, 0),
+    width: 2500,
+    ...PARAMS,
   });
 
   textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
   textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
+};
+
+lineHeightInput.on("change", (e) => {
+  updateMesh();
+});
+
+textInput.on("change", (e) => {
+  updateMesh();
+});
+
+widthInput.on("change", (e) => {
+  updateMesh();
+});
+
+letterSpacingInput.on("change", (e) => {
+  updateMesh();
+});
+
+alignInput.on("change", (e) => {
+  updateMesh();
+});
+
+colorInput.on("change", (e) => {
+  updateMesh();
 });

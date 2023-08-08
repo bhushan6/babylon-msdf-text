@@ -12,6 +12,7 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "@babylonjs/core": "^6.15.0"
+    "@babylonjs/core": "^6.15.0",
+    "tweakpane": "^4.0.0"
   }
 }
