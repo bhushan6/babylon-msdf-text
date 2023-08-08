@@ -128,7 +128,9 @@ class TextLayout {
     // the pen position
     let x = 0;
     let y = 0;
-    const lineHeight = number(options.lineHeight, font.common.lineHeight);
+    const optionLineHeight = options.lineHeight ? options.lineHeight : 1;
+    const lineHeight = font.common.lineHeight * Math.max(optionLineHeight, 1);
+
     const baseline = font.common.base;
     const descender = lineHeight - baseline;
     const letterSpacing = options.letterSpacing || 0;
