@@ -2,6 +2,8 @@
 
 Introducing babylon-msdf-text, that implements the Multi-channel Signed Distance Field (MSDF) technique for text rendering. This library provides developers with an efficient and straightforward way to render high-quality, scalable, and anti-aliased text in their Babylon.js projects. Leveraging the power of MSDF, it allows for superior text rendering, especially in WebGL contexts, overcoming the limitations of traditional bitmap fonts.
 
+![npm](https://img.shields.io/npm/v/babylon-msdf-text.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/babylon-msdf-text.svg?style=flat-square)
+
 ## Installation
 
 ```bash
@@ -10,20 +12,27 @@ npm install babylon-msdf-text
 
 ## Usage
 
-First, import the createTextMesh function from the library:
-
 ```javascript
 import { createTextMesh } from "babylon-msdf-text";
 ```
 
 The createTextMesh function is used to create a text mesh. It accepts the following parameters:
+align (string) can be "left", "center" or "right" (default: left)
+letterSpacing (number) the letter spacing in pixels (default: 0)
+lineHeight (number) the line height in pixels (default to font.common.lineHeight)
 
 - `text`: The text string you want to render in the scene.
-- `font`: A JSON file with font data.
-- `scene`: The Babylon.js scene in which you want to render the text.
-- `atlas`: A PNG image of the font.
-- `engine`: The Babylon.js engine.
+- `font`: A JSON file with font data (Required).
+- `scene`: The Babylon.js scene in which you want to render the text (Required).
+- `atlas`: A PNG image of the font (Required).
+- `engine`: The Babylon.js engine (Required).
   Here is a small example of how to use the library:
+- `width` : width of text block.
+- `opacity` : opacity of text.
+- `lineHeight` : The line height in percent. Default and minimum is 1.
+- `letterSpacing` : the letter spacing in pixel
+- `align` : Horizontal text alignment. Can be "left", 'center' or "right". Default is "left"
+- `color` : fill color of text. can be babylon's Color3 class or object of r, g and b values.
 
 ## Example
 
@@ -85,6 +94,12 @@ let textGeo = createTextMesh({
 textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
 textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
 ```
+
+## Roadmap
+
+- Option to add stroke
+- More Examples
+- NPM Publish workflow
 
 ## Contributing
 

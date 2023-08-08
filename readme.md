@@ -17,13 +17,22 @@ import { createTextMesh } from "babylon-msdf-text";
 ```
 
 The createTextMesh function is used to create a text mesh. It accepts the following parameters:
+align (string) can be "left", "center" or "right" (default: left)
+letterSpacing (number) the letter spacing in pixels (default: 0)
+lineHeight (number) the line height in pixels (default to font.common.lineHeight)
 
 - `text`: The text string you want to render in the scene.
-- `font`: A JSON file with font data.
-- `scene`: The Babylon.js scene in which you want to render the text.
-- `atlas`: A PNG image of the font.
-- `engine`: The Babylon.js engine.
+- `font`: A JSON file with font data (Required).
+- `scene`: The Babylon.js scene in which you want to render the text (Required).
+- `atlas`: A PNG image of the font (Required).
+- `engine`: The Babylon.js engine (Required).
   Here is a small example of how to use the library:
+- `width` : width of text block.
+- `opacity` : opacity of text.
+- `lineHeight` : The line height in percent. Default and minimum is 1.
+- `letterSpacing` : the letter spacing in pixel
+- `align` : Horizontal text alignment. Can be "left", 'center' or "right". Default is "left"
+- `color` : fill color of text. can be babylon's Color3 class or object of r, g and b values.
 
 ## Example
 
