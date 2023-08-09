@@ -95,6 +95,15 @@ textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
 textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
 ```
 
+## How to create assets for MSDF
+
+You can use [online MSDF assets generator](https://msdf-bmfont.donmccurdy.com/) to generate json and png file.
+
+- Just upload `.ttf` file of your choice of font
+- Type the characters you wanna pack in assets (including space)
+- select the size of texture
+- And create MSDF . (That's it!!)
+
 ## Roadmap
 
 - Option to add stroke
