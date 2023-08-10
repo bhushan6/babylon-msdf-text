@@ -102,7 +102,7 @@ You can use [online MSDF assets generator](https://msdf-bmfont.donmccurdy.com/) 
 - Just upload `.ttf` file of your choice of font
 - Type the characters you wanna pack in assets (including space)
 - select the size of texture
-- And create MSDF . (That's it!!)
+- And create MSDF and that's it 🎉
 
 ## Roadmap
 
