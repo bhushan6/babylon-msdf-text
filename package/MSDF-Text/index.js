@@ -175,6 +175,7 @@ export const createTextMesh = ({
         "uWordsTotal",
         "uLettersTotal",
       ],
+      needAlphaBlending: true,
     }
   );
 
@@ -191,11 +192,11 @@ export const createTextMesh = ({
   );
   shaderMaterial.setColor3("uStrokeColor", uStrokeColor);
 
-  shaderMaterial.setFloat("uThreshold", 0.5);
-  shaderMaterial.setFloat("uStrokeOutsetWidth", 0);
-  shaderMaterial.setFloat("uStrokeInsetWidth", strokeWidth);
+  shaderMaterial.setFloat("uThreshold", 0.05);
+  shaderMaterial.setFloat("uStrokeOutsetWidth", 0.0);
+  shaderMaterial.setFloat("uStrokeInsetWidth", 0.3);
   shaderMaterial.setFloat("uOpacity", opacity);
-  shaderMaterial.setFloat("uAlphaTest", 0.1);
+  shaderMaterial.setFloat("uAlphaTest", 0.01);
 
   shaderMaterial.setInt("uLinesTotal", infos.linesTotal);
   shaderMaterial.setInt("uWordsTotal", infos.wordsTotal);
