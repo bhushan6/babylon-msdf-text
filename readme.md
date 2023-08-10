@@ -1,6 +1,7 @@
 # babylon-msdf-text
 
 Introducing babylon-msdf-text, that implements the Multi-channel Signed Distance Field (MSDF) technique for text rendering. This library provides developers with an efficient and straightforward way to render high-quality, scalable, and anti-aliased text in their Babylon.js projects. Leveraging the power of MSDF, it allows for superior text rendering, especially in WebGL contexts, overcoming the limitations of traditional bitmap fonts.
+Here is [Live Demo](https://64d52b0b504b31091f46c3dc--singular-yeot-d552d6.netlify.app/)
 
 ![npm](https://img.shields.io/npm/v/babylon-msdf-text.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/babylon-msdf-text.svg?style=flat-square)
 
@@ -26,7 +27,6 @@ lineHeight (number) the line height in pixels (default to font.common.lineHeight
 - `scene`: The Babylon.js scene in which you want to render the text (Required).
 - `atlas`: A PNG image of the font (Required).
 - `engine`: The Babylon.js engine (Required).
-  Here is a small example of how to use the library:
 - `width` : width of text block.
 - `opacity` : opacity of text.
 - `lineHeight` : The line height in percent. Default and minimum is 1.
