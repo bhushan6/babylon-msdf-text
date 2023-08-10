@@ -11,7 +11,7 @@ const PARAMS = {
   letterSpacing: 0,
   width: 2500,
   align: "left",
-  color: { r: 1, g: 0, b: 1 },
+  color: { r: 255 / 255, g: 105 / 255, b: 180 / 255 },
   opacity: 1,
 };
 
@@ -26,7 +26,7 @@ const initCamera = (scene) => {
   );
 
   camera.attachControl(true);
-  camera.setPosition(new BABYLON.Vector3(0, 0, -800));
+  camera.setPosition(new BABYLON.Vector3(0, 0, -600));
   return camera;
 };
 
@@ -36,7 +36,7 @@ const engine = new BABYLON.Engine(canvas);
 
 const createScene = function (engine) {
   const scene = new BABYLON.Scene(engine);
-  scene.clearColor = new BABYLON.Color3(1, 1, 1);
+  scene.clearColor = new BABYLON.Color3(0, 0, 0);
   //CAMERA
   initCamera(scene);
 
@@ -107,8 +107,8 @@ const updateMesh = () => {
   textGeo = createTextMesh({
     text: `hello`,
     font: fnt,
-    scene,
     atlas: png,
+    scene,
     engine,
     color: new BABYLON.Color3(1, 0, 0),
     width: 2500,
