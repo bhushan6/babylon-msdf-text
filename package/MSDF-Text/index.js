@@ -10,6 +10,7 @@ export const createTextMesh = ({
   strokeColor = new BABYLON.Color3(0, 0, 0),
   opacity = 1,
   strokeWidth = 0.5,
+  instancing= false,
   ...options
 }) => {
   const layout = createLayout(options);
@@ -128,12 +129,14 @@ export const createTextMesh = ({
   vertexData.applyToMesh(textMesh);
   textMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
-  textMesh.rotation.y = 0;
-  textMesh.rotation.x = 3.14;
+  // textMesh.rotation.y = 0;
+  // textMesh.rotation.x = 3.14;
 
   BABYLON.Effect.ShadersStore["customVertexShader"] = vertexShader;
 
   BABYLON.Effect.ShadersStore["customFragmentShader"] = fragmentShader;
+
+  const instanceDefine = instancing ? ["#define INSTANCES"] : []
 
   const shaderMaterial = new BABYLON.ShaderMaterial(
     "shader",
@@ -175,6 +178,7 @@ export const createTextMesh = ({
         "uWordsTotal",
         "uLettersTotal",
       ],
+      defines: [...instanceDefine],
       needAlphaBlending: true,
     }
   );
