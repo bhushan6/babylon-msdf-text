@@ -13,6 +13,7 @@ export const createTextMesh = ({
   ...options
 }) => {
   const layout = createLayout(options);
+
   const font = options.font;
 
   // determine texture size from font file
