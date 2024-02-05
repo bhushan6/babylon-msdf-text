@@ -1,14 +1,7 @@
-import * as BABYLON from "@babylonjs/core";
+import { VertexBuffer } from "@babylonjs/core";
 
 export const setCustomAttributes = ({ engine, data, kind, stride, mesh }) => {
-  const buffer = new BABYLON.VertexBuffer(
-    engine,
-    data,
-    kind,
-    true,
-    false,
-    stride
-  );
+  const buffer = new VertexBuffer(engine, data, kind, true, false, stride);
 
   mesh.setVerticesBuffer(buffer);
 };

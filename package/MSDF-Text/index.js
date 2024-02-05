@@ -2,12 +2,20 @@ import { fragmentShader, setCustomAttributes, vertexShader } from "./utils";
 import createIndices from "quad-indices";
 import { createLayout } from "./TextLayout";
 import vertices from "./vertices";
-import * as BABYLON from "@babylonjs/core";
+import {
+  Color3,
+  Effect,
+  Mesh,
+  ShaderMaterial,
+  Texture,
+  Vector3,
+  VertexData,
+} from "@babylonjs/core";
 
 export const createTextMesh = ({
-  color = new BABYLON.Color3(0, 0, 0),
+  color = new Color3(0, 0, 0),
   stroke,
-  strokeColor = new BABYLON.Color3(0, 0, 0),
+  strokeColor = new Color3(0, 0, 0),
   opacity = 1,
   strokeWidth = 0.5,
   ...options
@@ -43,16 +51,16 @@ export const createTextMesh = ({
     count: glyphs.length,
   });
 
-  const textMesh = new BABYLON.Mesh(options.text || "text", options.scene);
+  const textMesh = new Mesh(options.text || "text", options.scene);
 
-  const vertexData = new BABYLON.VertexData();
+  const vertexData = new VertexData();
 
   vertexData.positions = attributes.positions;
   vertexData.indices = indices;
   vertexData.uvs = attributes.uvs;
 
   const normals = [];
-  BABYLON.VertexData.ComputeNormals(attributes.positions, indices, normals);
+  VertexData.ComputeNormals(attributes.positions, indices, normals);
   vertexData.normals = normals;
 
   setCustomAttributes({
@@ -127,16 +135,16 @@ export const createTextMesh = ({
   });
 
   vertexData.applyToMesh(textMesh);
-  textMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+  textMesh.scaling = new Vector3(0.5, 0.5, 0.5);
 
   textMesh.rotation.y = 0;
   textMesh.rotation.x = 3.14;
 
-  BABYLON.Effect.ShadersStore["customVertexShader"] = vertexShader;
+  Effect.ShadersStore["customVertexShader"] = vertexShader;
 
-  BABYLON.Effect.ShadersStore["customFragmentShader"] = fragmentShader;
+  Effect.ShadersStore["customFragmentShader"] = fragmentShader;
 
-  const shaderMaterial = new BABYLON.ShaderMaterial(
+  const shaderMaterial = new ShaderMaterial(
     "shader",
     options.scene,
     {
@@ -180,17 +188,13 @@ export const createTextMesh = ({
     }
   );
 
-  const mainTexture = new BABYLON.Texture(options.atlas, options.scene);
+  const mainTexture = new Texture(options.atlas, options.scene);
   shaderMaterial.setTexture("uFontAtlas", mainTexture);
 
-  const uColor = new BABYLON.Color3(color.r, color.g, color.b);
+  const uColor = new Color3(color.r, color.g, color.b);
   shaderMaterial.setColor3("uColor", uColor);
 
-  const uStrokeColor = new BABYLON.Color3(
-    strokeColor.r,
-    strokeColor.g,
-    strokeColor.b
-  );
+  const uStrokeColor = new Color3(strokeColor.r, strokeColor.g, strokeColor.b);
   shaderMaterial.setColor3("uStrokeColor", uStrokeColor);
 
   shaderMaterial.setFloat("uThreshold", 0.05);
