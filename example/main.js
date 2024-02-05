@@ -45,12 +45,13 @@ const createScene = function (engine) {
 
 const scene = createScene(engine);
 
+const atlas = new BABYLON.Texture(png, scene);
+
 let textGeo = createTextMesh({
   text: `Hello`,
   font: fnt,
   scene,
-  atlas: png,
-  engine,
+  atlas,
   color: new BABYLON.Color3(1, 0, 0),
   ...PARAMS,
 });
