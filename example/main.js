@@ -47,7 +47,7 @@ const scene = createScene(engine);
 
 const atlas = new BABYLON.Texture(png, scene);
 
-let textGeo = createTextMesh({
+let textMesh = createTextMesh({
   text: `Hello`,
   font: fnt,
   scene,
@@ -56,16 +56,8 @@ let textGeo = createTextMesh({
   ...PARAMS,
 });
 
-textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
-textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
-
-engine.runRenderLoop(function () {
-  scene.render();
-});
-
-window.addEventListener("resize", function () {
-  engine.resize();
-});
+textMesh.position.x = -textMesh.getBoundingInfo().boundingBox.center.x / 2;
+textMesh.position.y = textMesh.getBoundingInfo().boundingBox.center.y / 2;
 
 //GUI PANEL
 const pane = new Pane();
@@ -104,20 +96,19 @@ const opacityInput = pane.addBinding(PARAMS, "opacity", {
 });
 
 const updateMesh = () => {
-  textGeo.dispose();
-  textGeo = createTextMesh({
+  textMesh.dispose();
+  textMesh = createTextMesh({
     text: `hello`,
     font: fnt,
-    atlas: png,
+    atlas: atlas,
     scene,
-    engine,
     color: new BABYLON.Color3(1, 0, 0),
     width: 2500,
     ...PARAMS,
   });
 
-  textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
-  textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
+  textMesh.position.x = -textMesh.getBoundingInfo().boundingBox.center.x / 2;
+  textMesh.position.y = textMesh.getBoundingInfo().boundingBox.center.y / 2;
 };
 
 lineHeightInput.on("change", (e) => {
@@ -146,4 +137,29 @@ colorInput.on("change", (e) => {
 
 opacityInput.on("change", (e) => {
   updateMesh();
+});
+
+// let alphaSpeed = 0.001;
+// scene.registerBeforeRender(() => {
+//     scene.activeCamera.alpha += alphaSpeed;
+
+//     if (alphaSpeed < 0.005) {
+//         alphaSpeed *= 1.05;
+//     }
+
+//     for (var i = 0; i < addPerFrame; i++) {
+//         createTextInstance();
+//     }
+// });
+
+// for (var i = 0; i < addPerFrame; i++) {
+//   // createTextInstance();
+// }
+
+engine.runRenderLoop(function () {
+  scene.render();
+});
+
+window.addEventListener("resize", function () {
+  engine.resize();
 });

@@ -18,6 +18,7 @@ export const createTextMesh = ({
   strokeColor = new Color3(0, 0, 0),
   opacity = 1,
   strokeWidth = 0.5,
+  instancing = false,
   ...options
 }) => {
   const layout = createLayout(options);
@@ -198,6 +199,7 @@ export const createTextMesh = ({
         "uWordsTotal",
         "uLettersTotal",
       ],
+      defines: [],
       needAlphaBlending: true,
     }
   );
