@@ -24,6 +24,8 @@ export const createTextMesh = ({
 
   const font = options.font;
 
+  const engine = options.engine ? options.engine : options.scene.getEngine();
+
   // determine texture size from font file
   const texWidth = font.common.scaleW;
   const texHeight = font.common.scaleH;
@@ -64,7 +66,7 @@ export const createTextMesh = ({
   vertexData.normals = normals;
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: attributes.centers,
     kind: "center",
     stride: 2,
@@ -72,7 +74,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: attributes.layoutUvs,
     kind: "layoutUv",
     stride: 2,
@@ -80,7 +82,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineIndex,
     kind: "lineIndex",
     stride: 1,
@@ -88,7 +90,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineLettersTotal,
     kind: "lineLettersTotal",
     stride: 1,
@@ -96,7 +98,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineLetterIndex,
     kind: "lineLetterIndex",
     stride: 1,
@@ -104,7 +106,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineWordsTotal,
     kind: "lineWordsTotal",
     stride: 1,
@@ -112,7 +114,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineWordIndex,
     kind: "lineWordIndex",
     stride: 1,
@@ -120,14 +122,14 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.wordIndex,
     kind: "wordIndex",
     stride: 1,
     mesh: textMesh,
   });
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.letterIndex,
     kind: "letterIndex",
     stride: 1,
@@ -188,7 +190,10 @@ export const createTextMesh = ({
     }
   );
 
-  const mainTexture = new Texture(options.atlas, options.scene);
+  const mainTexture =
+    options.atlas instanceof Texture
+      ? options.atlas
+      : new Texture(options.atlas, options.scene);
   shaderMaterial.setTexture("uFontAtlas", mainTexture);
 
   const uColor = new Color3(color.r, color.g, color.b);
