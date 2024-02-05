@@ -24,7 +24,19 @@ export const createTextMesh = ({
 
   const font = options.font;
 
-  const engine = options.engine ? options.engine : options.scene.getEngine();
+  if (options.engine) {
+    console.warn(
+      "Warning: The engine argument is no longer required and will be ignored."
+    );
+  }
+
+  if (!(options.atlas instanceof Texture)) {
+    console.warn(
+      "Please provide the atlas as texture instead of image so each text mesh won't have a seperate texture instance"
+    );
+  }
+
+  const engine = options.scene.getEngine();
 
   // determine texture size from font file
   const texWidth = font.common.scaleW;
