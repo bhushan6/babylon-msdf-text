@@ -126,21 +126,27 @@ export const createTextMesh = ({
   });
 
   vertexData.applyToMesh(textMesh);
-  textMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+  // textMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
-  textMesh.rotation.y = 0;
-  textMesh.rotation.x = 3.14;
+  // textMesh.rotation.y = 0;
+  // textMesh.rotation.x = 3.14;
 
-  BABYLON.Effect.ShadersStore["customVertexShader"] = vertexShader;
+  const bb = textMesh.getBoundingInfo().boundingBox;
 
-  BABYLON.Effect.ShadersStore["customFragmentShader"] = fragmentShader;
+  console.log(bb);
+
+  
+
+  BABYLON.Effect.ShadersStore["MSDFVertexShader"] = vertexShader;
+
+  BABYLON.Effect.ShadersStore["MSDFFragmentShader"] = fragmentShader;
 
   const shaderMaterial = new BABYLON.ShaderMaterial(
     "shader",
     options.scene,
     {
-      vertex: "custom",
-      fragment: "custom",
+      vertex: "MSDF",
+      fragment: "MSDF",
     },
 
     {
@@ -163,6 +169,7 @@ export const createTextMesh = ({
         "worldView",
         "worldViewProjection",
         "view",
+        "viewProjection",
         "projection",
         "uColor",
         "uThreshold",

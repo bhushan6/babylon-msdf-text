@@ -83,22 +83,10 @@ function attributes(glyphs, texWidth, texHeight, flipY, layout) {
 
     // Position
 
-    // BL
-    positions[j++] = x;
-    positions[j++] = y;
-    positions[j++] = z;
-    // TL
-    positions[j++] = x;
-    positions[j++] = y + h;
-    positions[j++] = z;
-    // TR
-    positions[j++] = x + w;
-    positions[j++] = y + h;
-    positions[j++] = z;
-    // BR
-    positions[j++] = x + w;
-    positions[j++] = y;
-    positions[j++] = z;
+    positions[j++] = x ;     positions[j++] = -y;     positions[j++] = z; // Bottom-left becomes top-left
+    positions[j++] = x ;     positions[j++] = -(y + h); positions[j++] = z; // Top-left becomes bottom-left
+    positions[j++] = x + w; positions[j++] = -(y + h); positions[j++] = z; // Top-right becomes bottom-right
+    positions[j++] = x + w; positions[j++] = -y;     positions[j++] = z; // Bottom-right becomes top-right
 
     // Center
     centers[k++] = x + w / 2;

@@ -5,6 +5,8 @@ import fnt from "./fontAssets/roboto-regular.json";
 import png from "./fontAssets/roboto-regular.png";
 import { Pane } from "tweakpane";
 
+// const line = BABYLON.CreateGreasedLine("lineMesh", { points });
+
 const PARAMS = {
   text: "Hello Babylon",
   lineHeight: 1,
@@ -54,9 +56,32 @@ let textGeo = createTextMesh({
   color: new BABYLON.Color3(1, 0, 0),
   ...PARAMS,
 });
+const bb = textGeo.getBoundingInfo().boundingBox;
+// console.log(textGeo.getBoundingInfo().boundingBox);
+const width = bb.maximumWorld.x - bb.minimumWorld.x;
+const height = bb.maximumWorld.y - bb.minimumWorld.y;
 
-textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
-textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
+// const box = new BABYLON.MeshBuilder.CreateBox("box", {
+//   width: width,
+//   height: height,
+// }, scene);
+
+// box.position.z = 50
+
+// // 
+
+// scene.createDefaultLight(true)
+
+console.log(width, height);
+textGeo.position.x = -width/ 2;
+textGeo.position.y = -height / 2;
+
+const instance1 = textGeo.createInstance("instance")
+
+instance1.position.y = 50;
+instance1.material = textGeo.material;
+
+
 
 engine.runRenderLoop(function () {
   scene.render();
