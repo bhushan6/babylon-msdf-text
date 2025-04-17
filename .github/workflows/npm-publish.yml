@@ -1,0 +1,48 @@
+name: Publish NPM Package
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  publish:
+    name: Publish Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Determine release type from commit message
+        id: release_type
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MSG"
+          if echo "$COMMIT_MSG" | grep -q "BREAKING CHANGE:\|!:"; then
+            echo "release_type=major" >> $GITHUB_OUTPUT
+          elif echo "$COMMIT_MSG" | grep -q "^feat:"; then
+            echo "release_type=minor" >> $GITHUB_OUTPUT
+          elif echo "$COMMIT_MSG" | grep -q "^fix:"; then
+            echo "release_type=patch" >> $GITHUB_OUTPUT
+          else
+            echo "release_type=patch" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        run: cd package && npm clean-install
+
+      - name: Publish package
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: cd package && npm run publish:${{ steps.release_type.outputs.release_type }}
