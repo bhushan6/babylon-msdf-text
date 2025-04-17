@@ -52,6 +52,7 @@ The `createTextMesh` function creates a text mesh and accepts the following argu
   - `strokeWidth`: `number` - Stroke width (default: 0.5).
 - `scene`: `BABYLON.Scene` - The Babylon.js scene (required).
 
+
 ### Basic Example
 
 ```javascript
