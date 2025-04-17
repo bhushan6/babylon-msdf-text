@@ -25,14 +25,16 @@ lineHeight (number) the line height in pixels (default to font.common.lineHeight
 - `text`: The text string you want to render in the scene.
 - `font`: A JSON file with font data (Required).
 - `scene`: The Babylon.js scene in which you want to render the text (Required).
-- `atlas`: A PNG image of the font (Required).
-- `engine`: The Babylon.js engine (Required).
+- `atlas`: Texture instance or A PNG image of the font (Required).
 - `width` : width of text block.
 - `opacity` : opacity of text.
 - `lineHeight` : The line height in percent. Default and minimum is 1.
 - `letterSpacing` : the letter spacing in pixel
 - `align` : Horizontal text alignment. Can be "left", 'center' or "right". Default is "left"
 - `color` : fill color of text. can be babylon's Color3 class or object of r, g and b values.
+
+> [!NOTE]  
+> `atlas` used to be image input till v0.0.3 but now it also accepts the instance of texture and is recommended so not to create a new texture for each text mesh.
 
 ## Example
 
@@ -82,13 +84,14 @@ window.addEventListener("resize", function () {
   engine.resize();
 });
 
+const atlas = new BABYLON.Texture(png, scene);
+
 // Create text mesh
 let textGeo = createTextMesh({
   text: `Hello Babylon`,
   font: fnt,
   scene,
-  atlas: png,
-  engine,
+  atlas,
 });
 
 textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
