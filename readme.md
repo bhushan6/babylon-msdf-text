@@ -1,8 +1,6 @@
 # babylon-msdf-text
 
-**babylon-msdf-text** is a library for rendering high-quality, scalable, and anti-aliased text in [Babylon.js](https://www.babylonjs.com/) using the Multi-channel Signed Distance Field (MSDF) technique. It offers an efficient and straightforward solution for superior text rendering in WebGL contexts, overcoming the limitations of traditional bitmap fonts. Now written in TypeScript, it provides type safety and an improved developer experience, and includes support for instancing to optimize performance when rendering multiple text instances.
-
-Here is a [Live Demo](https://64d52b0b504b31091f46c3dc--singular-yeot-d552d6.netlify.app/).
+**babylon-msdf-text** is a library for rendering high-quality, scalable, and anti-aliased text in Babylon.js using the Multi-channel Signed Distance Field (MSDF) technique. It offers an efficient and straightforward solution for superior text rendering in WebGL contexts, overcoming the limitations of traditional bitmap fonts. Written in TypeScript, it provides type safety and an improved developer experience, and includes support for instancing to optimize performance when rendering multiple text instances.
 
 ![npm](https://img.shields.io/npm/v/babylon-msdf-text.svg?style=flat-square) ![npm](https://img.shields.io/npm/dt/babylon-msdf-text.svg?style=flat-square)
 
@@ -37,20 +35,22 @@ Import the `createTextMesh` function to create a text mesh:
 import { createTextMesh } from "babylon-msdf-text";
 ```
 
-The `createTextMesh` function accepts an options object with the following properties:
+The `createTextMesh` function creates a text mesh and accepts the following arguments:
 
-- **`text`**: `string` - The text to render (required).
-- **`font`**: `any` - A JSON file containing font data (required).
-- **`scene`**: `BABYLON.Scene` - The Babylon.js scene (required).
-- **`atlas`**: `string | BABYLON.Texture` - A URL to the font's PNG atlas or a Babylon.js Texture (required).
-- **`width`**: `number` - Maximum width of the text block in pixels; enables word wrapping (optional).
-- **`opacity`**: `number` - Text opacity (0 to 1; default: 1).
-- **`lineHeight`**: `number` - Line height as a percentage (minimum/default: 1).
-- **`letterSpacing`**: `number` - Letter spacing in pixels (default: 0).
-- **`align`**: `"left" | "center" | "right"` - Horizontal alignment (default: "left").
-- **`color`**: `BABYLON.Color3` - Text fill color (default: black).
-- **`strokeColor`**: `BABYLON.Color3` - Text stroke color (default: black).
-- **`strokeWidth`**: `number` - Stroke width (default: 0.5).
+- `name`: `string` - The name of the mesh (required).
+- `options`: `TextMeshOptions` - Configuration object with the following properties:
+  - `text`: `string` - The text to render (required).
+  - `font`: `any` - A JSON file containing font data (required).
+  - `atlas`: `string | BABYLON.Texture` - A URL to the font's PNG atlas or a Babylon.js Texture (required).
+  - `width`: `number` - Maximum width of the text block in pixels; enables word wrapping (optional).
+  - `opacity`: `number` - Text opacity (0 to 1; default: 1).
+  - `lineHeight`: `number` - Line height as a percentage (minimum/default: 1).
+  - `letterSpacing`: `number` - Letter spacing in pixels (default: 0).
+  - `align`: `"left" | "center" | "right"` - Horizontal alignment (default: "left").
+  - `color`: `BABYLON.Color3` - Text fill color (default: black).
+  - `strokeColor`: `BABYLON.Color3` - Text stroke color (default: black).
+  - `strokeWidth`: `number` - Stroke width (default: 0.5).
+- `scene`: `BABYLON.Scene` - The Babylon.js scene (required).
 
 ### Basic Example
 
@@ -80,19 +80,17 @@ camera.attachControl(canvas, true);
 camera.setPosition(new BABYLON.Vector3(0, 0, -400));
 
 // Create text mesh
-const textMesh = createTextMesh({
+const textMesh = createTextMesh("textMesh", {
   text: "Hello\nBabylon",
   font: fnt,
-  scene,
   atlas: png,
-  engine,
   width: 200, // Enables word wrapping
   align: "center",
   color: new BABYLON.Color3(1, 0, 0), // Red text
   strokeColor: new BABYLON.Color3(0, 0, 1), // Blue stroke
   strokeWidth: 1.0,
   opacity: 0.8,
-});
+}, scene);
 
 // Center the text mesh
 textMesh.position.x = -textMesh.getBoundingInfo().boundingBox.center.x / 2;
@@ -114,13 +112,11 @@ To render multiple instances of the same text mesh efficiently, use Babylon.js's
 
 ```javascript
 // Create base text mesh
-const textMesh = createTextMesh({
+const textMesh = createTextMesh("textMesh", {
   text: "Hello Babylon",
   font: fnt,
-  scene,
   atlas: png,
-  engine,
-});
+}, scene);
 
 // Create instances
 const instance1 = textMesh.createInstance("instance1");
@@ -136,14 +132,13 @@ This approach reuses the mesh geometry, improving performance for multiple text 
 
 ## How to Create MSDF Assets
 
-Generate the required JSON and PNG files using the [online MSDF assets generator](https://msdf-bmfont.donmccurdy.com/):
+Generate the required JSON and PNG files using the online MSDF assets generator:
 
 1. Upload your `.ttf` font file.
 2. Specify the characters to include (e.g., letters, numbers, symbols, and space).
 3. Choose the texture size.
 4. Generate and download the MSDF assets.
 
-Pass these files to the `font` and `atlas` options in `createTextMesh`. The JSON should contain `chars`, `kernings`, and `common` properties as expected by the library.
 
 ## Contributing
 
@@ -155,4 +150,4 @@ Contributions are welcome! To contribute:
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details (assuming an MIT license; adjust if different).
+This project is licensed under the MIT License. See the LICENSE file for details.
