@@ -1,19 +1,21 @@
 {
-  "name": "example",
+  "name": "example2",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "vite": "^4.4.5"
+    "typescript": "~5.7.2",
+    "vite": "^6.3.1"
   },
   "dependencies": {
-    "@babylonjs/core": "^6.15.0",
-    "babylon-msdf-text": "^0.0.3",
-    "tweakpane": "^4.0.0"
+    "@babylonjs/core": "^8.2.2",
+    "babylon-msdf-text": "^0.0.4",
+    "quad-indices": "^2.0.1",
+    "word-wrapper": "^1.0.7"
   }
 }

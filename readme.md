@@ -34,7 +34,7 @@ lineHeight (number) the line height in pixels (default to font.common.lineHeight
 - `color` : fill color of text. can be babylon's Color3 class or object of r, g and b values.
 
 > [!NOTE]  
-> `atlas` used to be image input ti;; v0.0.3 but now it also accepts the instance of texture and is recommended so not to create a new texture for each text mesh.
+> `atlas` used to be image input till v0.0.3 but now it also accepts the instance of texture and is recommended so not to create a new texture for each text mesh.
 
 ## Example
 
