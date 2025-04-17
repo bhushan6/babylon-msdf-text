@@ -2,18 +2,42 @@ import { fragmentShader, setCustomAttributes, vertexShader } from "./utils";
 import createIndices from "quad-indices";
 import { createLayout } from "./TextLayout";
 import vertices from "./vertices";
-import * as BABYLON from "@babylonjs/core";
+import {
+  Color3,
+  Effect,
+  Mesh,
+  ShaderMaterial,
+  Texture,
+  Vector3,
+  VertexData,
+} from "@babylonjs/core";
 
 export const createTextMesh = ({
-  color = new BABYLON.Color3(0, 0, 0),
+  color = new Color3(0, 0, 0),
   stroke,
-  strokeColor = new BABYLON.Color3(0, 0, 0),
+  strokeColor = new Color3(0, 0, 0),
   opacity = 1,
   strokeWidth = 0.5,
+  instancing = false,
   ...options
 }) => {
   const layout = createLayout(options);
+
   const font = options.font;
+
+  if (options.engine) {
+    console.warn(
+      "Warning: The engine argument is no longer required and will be ignored."
+    );
+  }
+
+  if (!(options.atlas instanceof Texture)) {
+    console.warn(
+      "Please provide the atlas as texture instead of image so each text mesh won't have a seperate texture instance"
+    );
+  }
+
+  const engine = options.scene.getEngine();
 
   // determine texture size from font file
   const texWidth = font.common.scaleW;
@@ -42,20 +66,20 @@ export const createTextMesh = ({
     count: glyphs.length,
   });
 
-  const textMesh = new BABYLON.Mesh(options.text || "text", options.scene);
+  const textMesh = new Mesh(options.text || "text", options.scene);
 
-  const vertexData = new BABYLON.VertexData();
+  const vertexData = new VertexData();
 
   vertexData.positions = attributes.positions;
   vertexData.indices = indices;
   vertexData.uvs = attributes.uvs;
 
   const normals = [];
-  BABYLON.VertexData.ComputeNormals(attributes.positions, indices, normals);
+  VertexData.ComputeNormals(attributes.positions, indices, normals);
   vertexData.normals = normals;
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: attributes.centers,
     kind: "center",
     stride: 2,
@@ -63,7 +87,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: attributes.layoutUvs,
     kind: "layoutUv",
     stride: 2,
@@ -71,7 +95,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineIndex,
     kind: "lineIndex",
     stride: 1,
@@ -79,7 +103,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineLettersTotal,
     kind: "lineLettersTotal",
     stride: 1,
@@ -87,7 +111,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineLetterIndex,
     kind: "lineLetterIndex",
     stride: 1,
@@ -95,7 +119,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineWordsTotal,
     kind: "lineWordsTotal",
     stride: 1,
@@ -103,7 +127,7 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.lineWordIndex,
     kind: "lineWordIndex",
     stride: 1,
@@ -111,14 +135,14 @@ export const createTextMesh = ({
   });
 
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.wordIndex,
     kind: "wordIndex",
     stride: 1,
     mesh: textMesh,
   });
   setCustomAttributes({
-    engine: options.engine,
+    engine: engine,
     data: infos.letterIndex,
     kind: "letterIndex",
     stride: 1,
@@ -126,22 +150,14 @@ export const createTextMesh = ({
   });
 
   vertexData.applyToMesh(textMesh);
-  // textMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
 
-  // textMesh.rotation.y = 0;
-  // textMesh.rotation.x = 3.14;
-
-  const bb = textMesh.getBoundingInfo().boundingBox;
-
-  console.log(bb);
-
-  
 
   BABYLON.Effect.ShadersStore["MSDFVertexShader"] = vertexShader;
 
   BABYLON.Effect.ShadersStore["MSDFFragmentShader"] = fragmentShader;
 
-  const shaderMaterial = new BABYLON.ShaderMaterial(
+
+  const shaderMaterial = new ShaderMaterial(
     "shader",
     options.scene,
     {
@@ -182,21 +198,21 @@ export const createTextMesh = ({
         "uWordsTotal",
         "uLettersTotal",
       ],
+      defines: [],
       needAlphaBlending: true,
     }
   );
 
-  const mainTexture = new BABYLON.Texture(options.atlas, options.scene);
+  const mainTexture =
+    options.atlas instanceof Texture
+      ? options.atlas
+      : new Texture(options.atlas, options.scene);
   shaderMaterial.setTexture("uFontAtlas", mainTexture);
 
-  const uColor = new BABYLON.Color3(color.r, color.g, color.b);
+  const uColor = new Color3(color.r, color.g, color.b);
   shaderMaterial.setColor3("uColor", uColor);
 
-  const uStrokeColor = new BABYLON.Color3(
-    strokeColor.r,
-    strokeColor.g,
-    strokeColor.b
-  );
+  const uStrokeColor = new Color3(strokeColor.r, strokeColor.g, strokeColor.b);
   shaderMaterial.setColor3("uStrokeColor", uStrokeColor);
 
   shaderMaterial.setFloat("uThreshold", 0.05);

@@ -47,16 +47,17 @@ const createScene = function (engine) {
 
 const scene = createScene(engine);
 
-let textGeo = createTextMesh({
+const atlas = new BABYLON.Texture(png, scene);
+
+let textMesh = createTextMesh({
   text: `Hello`,
   font: fnt,
   scene,
-  atlas: png,
-  engine,
+  atlas,
   color: new BABYLON.Color3(1, 0, 0),
   ...PARAMS,
 });
-const bb = textGeo.getBoundingInfo().boundingBox;
+const bb = textMesh.getBoundingInfo().boundingBox;
 // console.log(textGeo.getBoundingInfo().boundingBox);
 const width = bb.maximumWorld.x - bb.minimumWorld.x;
 const height = bb.maximumWorld.y - bb.minimumWorld.y;
@@ -73,23 +74,14 @@ const height = bb.maximumWorld.y - bb.minimumWorld.y;
 // scene.createDefaultLight(true)
 
 console.log(width, height);
-textGeo.position.x = -width/ 2;
-textGeo.position.y = -height / 2;
+textMesh.position.x = -width/ 2;
+textMesh.position.y = -height / 2;
 
-const instance1 = textGeo.createInstance("instance")
+const instance1 = textMesh.createInstance("instance")
 
 instance1.position.y = 50;
-instance1.material = textGeo.material;
+instance1.material = textMesh.material;
 
-
-
-engine.runRenderLoop(function () {
-  scene.render();
-});
-
-window.addEventListener("resize", function () {
-  engine.resize();
-});
 
 //GUI PANEL
 const pane = new Pane();
@@ -128,20 +120,19 @@ const opacityInput = pane.addBinding(PARAMS, "opacity", {
 });
 
 const updateMesh = () => {
-  textGeo.dispose();
-  textGeo = createTextMesh({
+  textMesh.dispose();
+  textMesh = createTextMesh({
     text: `hello`,
     font: fnt,
-    atlas: png,
+    atlas: atlas,
     scene,
-    engine,
     color: new BABYLON.Color3(1, 0, 0),
     width: 2500,
     ...PARAMS,
   });
 
-  textGeo.position.x = -textGeo.getBoundingInfo().boundingBox.center.x / 2;
-  textGeo.position.y = textGeo.getBoundingInfo().boundingBox.center.y / 2;
+  textMesh.position.x = -textMesh.getBoundingInfo().boundingBox.center.x / 2;
+  textMesh.position.y = textMesh.getBoundingInfo().boundingBox.center.y / 2;
 };
 
 lineHeightInput.on("change", (e) => {
@@ -170,4 +161,29 @@ colorInput.on("change", (e) => {
 
 opacityInput.on("change", (e) => {
   updateMesh();
+});
+
+// let alphaSpeed = 0.001;
+// scene.registerBeforeRender(() => {
+//     scene.activeCamera.alpha += alphaSpeed;
+
+//     if (alphaSpeed < 0.005) {
+//         alphaSpeed *= 1.05;
+//     }
+
+//     for (var i = 0; i < addPerFrame; i++) {
+//         createTextInstance();
+//     }
+// });
+
+// for (var i = 0; i < addPerFrame; i++) {
+//   // createTextInstance();
+// }
+
+engine.runRenderLoop(function () {
+  scene.render();
+});
+
+window.addEventListener("resize", function () {
+  engine.resize();
 });
