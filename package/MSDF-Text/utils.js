@@ -13,14 +13,18 @@ attribute vec3 position;
 attribute vec2 uv; 
 attribute vec2 center; 
 
-uniform mat4 worldViewProjection; 
+uniform mat4 viewProjection; 
 
 varying vec2 vUv;
 varying vec2 vCenter; 
 
+#include<instancesDeclaration>
+
 void main(void) { 
 
-  gl_Position = worldViewProjection * vec4(position, 1.0); 
+  #include<instancesVertex>
+  gl_Position = viewProjection  * finalWorld * vec4(position, 1.0); 
+
   vUv = uv; 
   vCenter = center;
 }
