@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
     alias = {
       "babylon-msdf-text": path.resolve(
         __dirname,
-        "../package/MSDF-Text/index.js"
+        "../package/dist/babylon-msdf-text.es.js"
       ),
     };
   }
