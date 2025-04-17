@@ -8,7 +8,6 @@ import createIndices from "quad-indices";
  * Options for creating a text mesh
  */
 export interface TextMeshOptions extends TextLayoutOptions {
-  scene: BABYLON.Scene;
   atlas: string | BABYLON.Texture;
   color?: BABYLON.Color3;
   strokeColor?: BABYLON.Color3;
@@ -21,13 +20,16 @@ export interface TextMeshOptions extends TextLayoutOptions {
  * @param options - Configuration options for the text mesh
  * @returns A Babylon.js Mesh with MSDF text rendering
  */
-export function createTextMesh(options: TextMeshOptions): BABYLON.Mesh {
+export function createTextMesh(
+  name: string,
+  options: TextMeshOptions,
+  scene: BABYLON.Scene
+): BABYLON.Mesh {
   const {
     color = new BABYLON.Color3(0, 0, 0),
     strokeColor = new BABYLON.Color3(0, 0, 0),
     opacity = 1,
     strokeWidth = 0.5,
-    scene,
     atlas,
     ...layoutOptions
   } = options;
@@ -61,7 +63,7 @@ export function createTextMesh(options: TextMeshOptions): BABYLON.Mesh {
     count: glyphs.length,
   });
 
-  const textMesh = new BABYLON.Mesh(options.text || "text", scene);
+  const textMesh = new BABYLON.Mesh(name, scene);
   const vertexData = new BABYLON.VertexData();
 
   vertexData.positions = attributes.positions;

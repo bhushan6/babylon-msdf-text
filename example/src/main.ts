@@ -48,15 +48,19 @@ const scene = createScene(engine);
 
 const atlasTex = new BABYLON.Texture(png, scene);
 
-const textMesh = createTextMesh({
-  font: fnt,
-  scene,
-  atlas: atlasTex,
-  text: "Hello",
-  strokeColor: new BABYLON.Color3(1, 1, 0),
-  strokeWidth: 0.5,
-  ...PARAMS,
-});
+const textMesh = createTextMesh(
+  "textMesh",
+  {
+    font: fnt,
+
+    atlas: atlasTex,
+    text: "Hello",
+    strokeColor: new BABYLON.Color3(1, 1, 0),
+    strokeWidth: 0.5,
+    ...PARAMS,
+  },
+  scene
+);
 
 const bb = textMesh.getBoundingInfo().boundingBox;
 const width = bb.maximumWorld.x - bb.minimumWorld.x;
@@ -70,15 +74,18 @@ const instance1 = textMesh.createInstance("instance");
 instance1.position.y = 50;
 instance1.material = textMesh.material;
 
-const textMesh2 = createTextMesh({
-  font: fnt,
-  scene,
-  atlas: atlasTex,
-  text: "BYE",
-  strokeColor: new BABYLON.Color3(1, 1, 0),
-  strokeWidth: 0.5,
-  color: new BABYLON.Color3(1, 0, 1),
-});
+const textMesh2 = createTextMesh(
+  "textMesh2",
+  {
+    font: fnt,
+    atlas: atlasTex,
+    text: "BYE",
+    strokeColor: new BABYLON.Color3(1, 1, 0),
+    strokeWidth: 0.5,
+    color: new BABYLON.Color3(1, 0, 1),
+  },
+  scene
+);
 
 engine.runRenderLoop(function () {
   scene.render();
