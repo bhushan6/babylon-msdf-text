@@ -28,8 +28,7 @@
   },
   "dependencies": {
     "@babylonjs/core": "^8.2.2",
-    "quad-indices": "^2.0.1",
-    "word-wrapper": "^1.0.7"
+    "quad-indices": "^2.0.1"
   },
   "files": [
     "dist"
