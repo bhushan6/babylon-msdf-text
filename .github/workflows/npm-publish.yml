@@ -41,7 +41,11 @@ jobs:
 
       - name: Install dependencies
         run: cd package && npm clean-install
-
+        
+      - name: debug
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: console.log("seceret :", secrets.NPM_TOKEN)
       - name: Publish package
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
