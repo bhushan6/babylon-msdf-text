@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@babylonjs/core": "^8.2.2",
-    "babylon-msdf-text": "^0.0.4",
+    "babylon-msdf-text": "latest",
     "quad-indices": "^2.0.1",
     "word-wrapper": "^1.0.7"
   }
