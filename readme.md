@@ -1,3 +1,7 @@
+⚠️ DEPRECATION WARNING: This package is deprecated as of 13 May 2025. Babylon.js now includes native MSDF text rendering capabilities. We recommend migrating to the official Babylon.js text rendering solution for better support and future compatibility.
+Migration Guide: Please refer to the official Babylon.js [documentation](https://doc.babylonjs.com/addons/msdfText/) for information on using the native MSDF text rendering features.
+Support: No new features will be added. Please plan your migration accordingly.
+
 # babylon-msdf-text
 
 **babylon-msdf-text** is a library for rendering high-quality, scalable, and anti-aliased text in Babylon.js using the Multi-channel Signed Distance Field (MSDF) technique. It offers an efficient and straightforward solution for superior text rendering in WebGL contexts, overcoming the limitations of traditional bitmap fonts. Written in TypeScript, it provides type safety and an improved developer experience, and includes support for instancing to optimize performance when rendering multiple text instances.
